@@ -2,17 +2,24 @@
 
 require_once("vendor/autoload.php");
 
-$app = new \Slim\Slim();
+use \Slim\Slim;
+use \Hcode\Page;
+
+//chama as rotas 
+$app = new Slim();
 
 $app->config('debug', true);
 
 $app->get('/', function() {
     
-	$sql = new Hcode\DB\Sql();
 
-	$result = $sql->select("select * from tb_users");
+	//quando chama o construct ele ja irar adicionar o header
+	$page = new Page();
+    
+	//aqui ele chama o corpo da pagina
+	$page->setTpl("index");
 
-	echo json_encode($result,true);
+	//aqui ele termina a execução ele chama __destruct que cria o foot
 
 });
 
