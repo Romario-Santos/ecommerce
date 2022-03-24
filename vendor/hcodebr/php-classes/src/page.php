@@ -1,16 +1,21 @@
 <?php
 namespace Hcode;
 
+//carrega namespace do Rain\Tpl
 use Rain\Tpl;
 
 class Page{
 
 
     private $tpl;
+    
     private $options = [];
     private $default = [
-        "data"=>[]
+        "data"=>[
+        ]
     ];
+
+
 
     public function __construct($opts = array()){
         /**
@@ -19,6 +24,7 @@ class Page{
         $this->options = array_merge($this->default,$opts);
        
         /**
+         * diz para Rain Tpl onde esta diretorio de tamplete e o de cacher
          * Definimos diretorio onde estara nosso template no caso diretorio viewes
          * e a pasta de cacher onde serao montado tamples antes da visualização do usuario no caso e o views-cacher
          */
@@ -31,10 +37,10 @@ class Page{
         //passamos as configuraçoes para class Tpl
         Tpl::configure($config);
         
-        //estacimos class Tpl
+        //estancia o objeto da class Tpl que esta no namespace Rain\Tpl
         $this->tpl = new Tpl;
         
-        //fazemos o assing com dados que passamos
+        //fazemos o assing com dados que passamos para que o rain tpl entenda esses dados dentro do template
         $this->setData($this->options["data"]);
 
         //desenhamos o cabecalho
@@ -42,11 +48,18 @@ class Page{
     }
 
 
+
+
+
     private function setData($data = array()){
         foreach ($data as $key => $value) {
-            $this->tpl->assing($key,$value);
+            
+            $this->tpl->assign($key,$value);
         }
     }
+
+
+
 
     public function setTpl($name,$data = array(),$returnHTML = false){
         /**
@@ -59,6 +72,10 @@ class Page{
          */
         return $this->tpl->draw($name,$returnHTML);
     }
+
+
+
+
 
     public function __destruct(){
         //ao para execução da class desenhamos o rodape

@@ -59,7 +59,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="copyright">
-                    <p>&copy; 2017 Hcode Treinamentos. <a href="http://www.hcode.com.br" target="_blank">hcode.com.br</a></p>
+                    <p>&copy;<?php echo htmlspecialchars( $autor, ENT_COMPAT, 'UTF-8', FALSE ); ?>. <?php echo htmlspecialchars( $dataAtual, ENT_COMPAT, 'UTF-8', FALSE ); ?> <a href="mailto:romariocb2@gmail.com" target="_blank"><?php echo htmlspecialchars( $email, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></p>
                 </div>
             </div>
             
