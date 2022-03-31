@@ -17,7 +17,7 @@ class Page{
 
 
 
-    public function __construct($opts = array()){
+    public function __construct($opts = array(),$tpl_dir = "/views/"){
         /**
          * pegamos o array de dados passado no construtor e mesclamo com o array default da class e atibuimos ao array options
          */
@@ -29,7 +29,7 @@ class Page{
          * e a pasta de cacher onde serao montado tamples antes da visualização do usuario no caso e o views-cacher
          */
         $config = array(
-            "tpl_dir"=>$_SERVER["DOCUMENT_ROOT"]."/views/",
+            "tpl_dir"=>$_SERVER["DOCUMENT_ROOT"].$tpl_dir,
             "cache_dir"=>$_SERVER["DOCUMENT_ROOT"]."/views-cache/",
             "debug"=>false
         );
@@ -41,7 +41,7 @@ class Page{
         $this->tpl = new Tpl;
         
         //fazemos o assing com dados que passamos para que o rain tpl entenda esses dados dentro do template
-        $this->setData($this->options["data"]);
+        //$this->setData($this->options["data"]);
 
         //desenhamos o cabecalho
         $this->tpl->draw("header");
@@ -65,7 +65,7 @@ class Page{
         /**
          * assinamos os dados que passamos como parametro
          */
-        $this->setData($data);
+        $this->setData($data['data']);
 
         /**
          * desenhamos o tamplete que passamos 
