@@ -11,6 +11,8 @@ class Page{
     
     private $options = [];
     private $default = [
+        "header"=>true,
+        "footer"=>true,
         "data"=>[
         ]
     ];
@@ -39,12 +41,14 @@ class Page{
         
         //estancia o objeto da class Tpl que esta no namespace Rain\Tpl
         $this->tpl = new Tpl;
+
+        $this->setData($this->options["data"]);
         
         //fazemos o assing com dados que passamos para que o rain tpl entenda esses dados dentro do template
         //$this->setData($this->options["data"]);
 
         //desenhamos o cabecalho
-        $this->tpl->draw("header");
+        if($this->options["header"] === true) $this->tpl->draw("header");
     }
 
 
@@ -65,7 +69,8 @@ class Page{
         /**
          * assinamos os dados que passamos como parametro
          */
-        $this->setData($data['data']);
+       
+        $this->setData($data);
 
         /**
          * desenhamos o tamplete que passamos 
@@ -79,7 +84,7 @@ class Page{
 
     public function __destruct(){
         //ao para execução da class desenhamos o rodape
-        $this->tpl->draw("footer");
+        if($this->options["footer"] === true)$this->tpl->draw("footer");
     }
 
 }
