@@ -8,21 +8,25 @@ use \Hcode\PageAdmin;
 use \Hcode\Model\User;
 use \Hcode\Model\categories;
 
+
+
+
 //chama as rotas 
 $app = new Slim();
 
 $app->config('debug', true);
 
 $app->get('/', function() {
-    
-	$data = new DateTime();
-    $dados = [
-		"data"=>[
-			"autor"=>"Romario Santos",
-            "email"=>"Romariocb2@gmail.com",
-			"dataAtual"=>$data->format("d/m/Y")
-		]
-	];
+    $data = new DateTime();
+$dados = [
+	"data"=>[
+		"autor"=>"Romario Santos",
+		"email"=>"Romariocb2@gmail.com",
+		"dataAtual"=>$data->format("d/m/Y")
+	]
+];
+	
+   
 	
 	//quando chama o construct ele ja irar adicionar o header
 	$page = new Page($dados);
@@ -293,6 +297,33 @@ $app->post("/admin/categories/:idcategory",function($idcategory){
 	
 	header("location: /admin/categories");
 	exit;
+});
+
+$app->get("/category/:idcategory",function($idcategory)
+{
+	$data = new DateTime();
+	$dados = [
+		"data"=>[
+			"autor"=>"Romario Santos",
+			"email"=>"Romariocb2@gmail.com",
+			"dataAtual"=>$data->format("d/m/Y")
+		]
+	];
+
+
+   $categories = new Categories();
+
+   $categories->get((int)$idcategory);
+
+   $page = new Page($dados);
+    
+	//aqui ele chama o corpo da pagina passando umas variaveis 
+	$page->setTpl("category",[
+		"category"=>$categories->getValues(),
+		"products"=>[]
+	]);
+
+
 });
 
 
