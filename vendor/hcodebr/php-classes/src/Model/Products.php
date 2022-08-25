@@ -14,7 +14,19 @@ class Products extends Model{
          $sql = new Sql();
          return $sql->select('select * from tb_products ORDER BY desproduct');
      }
+     
+     public static function checkList($list)
+     {
+          foreach($list as &$row)
+          {
+              $r = new Products();
+              $r->setData($row);
+              $row = $r->getValues();
 
+          }
+
+          return $list;
+     }
      public function save()
      {
         
@@ -71,6 +83,8 @@ class Products extends Model{
         return $this->setdesphoto($url);
 
     }
+
+   
 
     public function setPhoto($file)
 {  

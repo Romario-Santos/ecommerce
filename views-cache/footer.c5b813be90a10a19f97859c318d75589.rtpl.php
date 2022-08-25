@@ -57,7 +57,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="copyright">
-                    <p>&copy;<?php echo htmlspecialchars( $autor, ENT_COMPAT, 'UTF-8', FALSE ); ?>. <?php echo htmlspecialchars( $dataAtual, ENT_COMPAT, 'UTF-8', FALSE ); ?> <a href="mailto:romariocb2@gmail.com" target="_blank"><?php echo htmlspecialchars( $email, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></p>
+                    <p>&copy;Romario <a href="mailto:romariocb2@gmail.com" target="_blank">romariocb2@gmail.com</a></p>
                 </div>
             </div>
             

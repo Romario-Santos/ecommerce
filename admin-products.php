@@ -13,6 +13,23 @@ User::verifyLogin();
 
 });
 
+$app->get("/admin/products/:idproducts/delete",function($idproducts){
+
+       
+    User::verifylogin();
+
+    $producty = new Products();
+
+    $producty->get((int)$idproducts);
+
+    $producty->delete();
+
+    header("Location: /admin/products");
+    exit;
+
+
+});
+
 
 $app->get("/admin/products/create",function(){
     User::verifyLogin();
