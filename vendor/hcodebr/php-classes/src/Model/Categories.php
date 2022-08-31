@@ -114,11 +114,42 @@ class Categories extends Model{
 
     public function removeProduct(Products $products)
     {
+        
         $sql = new Sql();
         $sql->query("DELETE FROM tb_productscategories WHERE idcategory = :idcategory AND idproduct = :idproduct",array(
         ":idcategory"=>$this->getidcategory(),
         ":idproduct"=>$products->getidproduct()));
     }
+
+    public function getProductsPage($page = 1, $itensPerPage = 8)
+    {
+      //var_dump($page);
+       
+        $start = ($page - 1) * $itensPerPage;
+        
+        
+        $sql = new Sql();
+
+      $result = $sql->select("
+      SELECT SQL_CALC_FOUND_ROWS *
+FROM tb_products a
+INNER JOIN tb_productscategories b on a.idproduct = b.idproduct
+INNER JOIN tb_categories c on c.idcategory = b.idcategory
+WHERE c.idcategory = :idcategory
+LIMIT $start, $itensPerPage",[
+    ":idcategory"=>$this->getidcategory()]);
+
+    $resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+    return [
+        "data"=>Products::checkList($result),
+        "total"=>(int)$resultTotal[0]["nrtotal"],
+        "pages"=>ceil($resultTotal[0]["nrtotal"] / $itensPerPage)
+    ];
+
+    }
+
+    
 
 
 }

@@ -35,17 +35,30 @@ $app->get("/category/:idcategory",function($idcategory)
 		]
 	];
 
+   $page = (isset($_GET["page"])) ? (int)$_GET["page"] : 1;
 
    $categories = new Categories();
 
    $categories->get((int)$idcategory);
 
-   $page = new Page($dados);
+
+   $pagination = $categories->getProductsPage($page);
+
+   $pages = [];
+   
+   for ($i=1; $i <= $pagination["pages"] ; $i++) { 
+	   array_push($pages, [
+		'link'=>'/category/'.$categories->getidcategory().'?page='.$i,
+		'page'=>$i
+	   ]);
+   }
     
+    $page = new Page($dados);
 	//aqui ele chama o corpo da pagina passando umas variaveis 
 	$page->setTpl("category",[
 		"category"=>$categories->getValues(),
-		"products"=>Products::checkList($categories->getProducts())
+		"products"=>$pagination["data"],
+		"pages"=>$pages
 	]);
 
 
